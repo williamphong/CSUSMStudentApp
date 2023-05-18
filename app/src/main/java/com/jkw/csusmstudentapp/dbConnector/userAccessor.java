@@ -200,16 +200,20 @@ public class userAccessor {
      * @throws SQLException throws sql
      */
     public String getPassword(String userID) throws SQLException {
-        String getPasswordQuery = "SELECT password FROM users WHERE userID= ?";
-        try (PreparedStatement preparedStatement = c.prepareStatement(getPasswordQuery)) {
-            preparedStatement.setString(1, userID);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getString("password");
-                }
+        String outputType = "";
+        String sql = "SELECT id, password " +
+                "FROM SchoolAppDB.User";
+
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()) {
+            //System.out.println(rs.getString("id"));
+            if(Objects.equals(rs.getString("id"), userID)){
+                outputType = rs.getString("password");
+                return outputType;
             }
         }
-        return "";
+
+        return outputType;
     }
 
 

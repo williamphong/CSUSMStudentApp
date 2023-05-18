@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
-import com.jkw.csusmstudentapp.data.LoginRepository;
-import com.jkw.csusmstudentapp.data.Result;
-import com.jkw.csusmstudentapp.data.model.LoggedInUser;
+import com.jkw.csusmstudentapp.Login.LoginRepository;
+import com.jkw.csusmstudentapp.Login.Result;
+import com.jkw.csusmstudentapp.Login.model.LoggedInUser;
 import com.jkw.csusmstudentapp.R;
 
 public class LoginViewModel extends ViewModel {
@@ -31,6 +31,7 @@ public class LoginViewModel extends ViewModel {
 
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
+        //Log.d("MY MESSAGE!!", password);
         Result<LoggedInUser> result = loginRepository.login(username, password);
 
         if (result instanceof Result.Success) {
@@ -65,6 +66,6 @@ public class LoginViewModel extends ViewModel {
 
     // A placeholder password validation check
     private boolean isPasswordValid(String password) {
-        return password != null && password.trim().length() > 5;
+        return password != null && password.trim().length() > 4;
     }
 }

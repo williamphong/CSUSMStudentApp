@@ -43,7 +43,11 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".Login.Create"
+            android:name=".Login.CreateUser"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".Parking.ParkingPage"
             android:exported="true">
         </activity>
         <activity

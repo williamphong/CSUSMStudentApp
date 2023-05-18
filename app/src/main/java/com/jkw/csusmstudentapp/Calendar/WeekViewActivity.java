@@ -9,13 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static com.jkw.csusmstudentapp.Calendar.CalendarUtils.daysInMonthArray;
 import static com.jkw.csusmstudentapp.Calendar.CalendarUtils.daysInWeekArray;
 import static com.jkw.csusmstudentapp.Calendar.CalendarUtils.monthYearFromDate;
 
@@ -55,7 +53,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
-        setEventAdpater();
+        setEventAdapter();
     }
 
 
@@ -80,13 +78,13 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     {
         super.onResume();
         try {
-            setEventAdpater();
+            setEventAdapter();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void setEventAdpater() throws SQLException {
+    private void setEventAdapter() throws SQLException {
         ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.selectedDate);
         EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
         eventListView.setAdapter(eventAdapter);

@@ -6,6 +6,7 @@ import static com.jkw.csusmstudentapp.Calendar.CalendarUtils.monthYearFromDate;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,41 +18,41 @@ import com.jkw.csusmstudentapp.Calendar.CalendarAdapter;
 import com.jkw.csusmstudentapp.Calendar.CalendarUtils;
 import com.jkw.csusmstudentapp.Calendar.Event;
 import com.jkw.csusmstudentapp.Calendar.WeekViewActivity;
+import com.jkw.csusmstudentapp.Parking.ParkingPage;
 import com.jkw.csusmstudentapp.dbConnector.assignmentAccessor;
+import com.jkw.csusmstudentapp.dbConnector.parkingAccessor;
+import com.mysql.jdbc.Connection;
 
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener
-{
+public class MainActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener {
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initWidgets();
         CalendarUtils.selectedDate = LocalDate.now();
         setMonthView();
 
-
-
     }
 
-    private void initWidgets()
-    {
+    private void initWidgets() {
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
         monthYearText = findViewById(R.id.monthYearTV);
     }
 
-    private void setMonthView()
-    {
+    private void setMonthView() {
         monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
         ArrayList<LocalDate> daysInMonth = daysInMonthArray(CalendarUtils.selectedDate);
 
@@ -61,23 +62,19 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         calendarRecyclerView.setAdapter(calendarAdapter);
     }
 
-    public void previousMonthAction(View view)
-    {
+    public void previousMonthAction(View view){
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusMonths(1);
         setMonthView();
     }
 
-    public void nextMonthAction(View view)
-    {
+    public void nextMonthAction(View view){
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusMonths(1);
         setMonthView();
     }
 
     @Override
-    public void onItemClick(int position, LocalDate date)
-    {
-        if(date != null)
-        {
+    public void onItemClick(int position, LocalDate date){
+        if(date != null){
             CalendarUtils.selectedDate = date;
             setMonthView();
         }
@@ -86,11 +83,15 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
     public void weeklyAction(View view) {
         startActivity(new Intent(this, WeekViewActivity.class));
         new Task().execute();
+        new DatabaseTask().execute();
+    }
+    public void parkingAction(View view) {
+        startActivity(new Intent(this, ParkingPage.class));
+        new DatabaseTask().execute();
     }
 
 
     static class Task extends AsyncTask<Void, Void, Void>{
-
         @Override
         protected Void doInBackground(Void... voids) {
             assignmentAccessor aa;
@@ -141,6 +142,57 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
             return null;
         }
     }
+/*
+    static class ParkingTask extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            parkingAccessor pa;
+            try {
+                pa = new parkingAccessor();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            Event newEvent;
+            try {
+
+                newEvent = new Event(pa.getName(), LocalDate.parse(aa.getDueDate(list.get(i))), LocalTime.parse("11:59:00"), list.get(i));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            Event.eventsList.add(newEvent);
+
+            return null;
+        }
+
+    }
+
+ */
+static class DatabaseTask extends AsyncTask<Void, Void, Void>{
+
+    @Override
+    protected Void doInBackground(Void... voids) {
+        parkingAccessor pa;
+        try {
+            pa = new parkingAccessor();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        String arr[];
+        try {
+            arr = pa.getArr();
+            ParkingPage.parkArr = arr;
+            Log.d("MY MESSAGE!!", "PARKING");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+
+}
+
 }
 
 

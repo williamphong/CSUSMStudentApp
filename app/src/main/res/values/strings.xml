@@ -58,4 +58,6 @@
     <string name="create_user">Create User</string>
     <string name="password">password</string>
     <string name="username">username</string>
+    <string name="parking_lot_availability">Parking Lot Availability</string>
+    <string name="list_of_parking_lots">"List of parking lots: "</string>
 </resources>

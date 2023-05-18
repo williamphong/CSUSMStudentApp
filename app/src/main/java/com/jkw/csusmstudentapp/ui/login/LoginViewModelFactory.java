@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 
-import com.jkw.csusmstudentapp.data.LoginDataSource;
-import com.jkw.csusmstudentapp.data.LoginRepository;
+import com.jkw.csusmstudentapp.Login.LoginDataSource;
+import com.jkw.csusmstudentapp.Login.LoginRepository;
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
