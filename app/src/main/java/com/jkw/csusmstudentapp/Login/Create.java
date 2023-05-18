@@ -33,26 +33,23 @@ public class Create extends AppCompatActivity {
         EditText editTextUsername = findViewById(R.id.username);
         EditText editTextPassword = findViewById(R.id.password);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String username = editTextUsername.getText().toString();
-                String password = editTextPassword.getText().toString();
+        button.setOnClickListener(v -> {
+            String username = editTextUsername.getText().toString();
+            String password = editTextPassword.getText().toString();
 
 
-                if(username.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(Create.this,"Please enter user and password", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    hashedPassword = hashPassword(password);
-                    new Task().execute();
-
-                    Toast.makeText(Create.this,"User successfully made", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(Create.this, MainActivity.class));
-                    finish();
-                }
-
+            if(username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(Create.this,"Please enter user and password", Toast.LENGTH_SHORT).show();
             }
+            else{
+                hashedPassword = hashPassword(password);
+                new Task().execute();
+
+                Toast.makeText(Create.this,"User successfully made", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Create.this, MainActivity.class));
+                finish();
+            }
+
         });
 
 
