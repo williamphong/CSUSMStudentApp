@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -22,10 +23,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jkw.csusmstudentapp.Calendar.WeekViewActivity;
+import com.jkw.csusmstudentapp.Login.Create;
+import com.jkw.csusmstudentapp.MainActivity;
 import com.jkw.csusmstudentapp.R;
 import com.jkw.csusmstudentapp.ui.login.LoginViewModel;
 import com.jkw.csusmstudentapp.ui.login.LoginViewModelFactory;
 import com.jkw.csusmstudentapp.databinding.ActivityLoginBinding;
+
+import java.sql.SQLException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -132,5 +138,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void createAction(View view){
+        startActivity(new Intent(this, Create.class));
     }
 }

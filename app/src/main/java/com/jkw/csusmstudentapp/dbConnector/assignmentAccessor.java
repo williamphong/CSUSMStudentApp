@@ -11,14 +11,16 @@ import java.util.Scanner;
 public class assignmentAccessor {
     private static final String CONNECTION = "jdbc:mysql://10.0.2.2/";
     private final Statement stmt;
+    private final String PASSWORD = "Yerinfan01:)";
 
     public assignmentAccessor() throws SQLException {
         Properties p = new Properties();
 
         // retrieves password from file
+        /*
         String password ="";
         try {
-            File pass = new File("src/main/resources/password.txt");
+            File pass = new File("app/src/main/password/password.txt");
             Scanner myReader = new Scanner(pass);
             while (myReader.hasNextLine()) {
                 password = myReader.nextLine();
@@ -28,10 +30,11 @@ public class assignmentAccessor {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+         */
 
         // log into mysql db
         p.put("user", "root");
-        p.put("password", "");
+        p.put("password", PASSWORD);
 
         // connect to db
         Connection c = DriverManager.getConnection(CONNECTION, p);

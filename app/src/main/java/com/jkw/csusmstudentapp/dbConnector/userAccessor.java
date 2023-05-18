@@ -12,6 +12,8 @@ public class userAccessor {
     private final Connection c;
     private final Statement stmt;
 
+    private final String PASSWORD = "Yerinfan01:)";
+
 
     ///////////////////////////
     // CONSTRUCTOR
@@ -20,9 +22,10 @@ public class userAccessor {
         Properties p = new Properties();
 
         // retrieves password from file
+        /*
         String password ="";
         try {
-            File pass = new File("src/main/resources/password.txt");
+            File pass = new File("app/src/main/password/password.txt");
             Scanner myReader = new Scanner(pass);
             while (myReader.hasNextLine()) {
                 password = myReader.nextLine();
@@ -33,9 +36,11 @@ public class userAccessor {
             e.printStackTrace();
         }
 
+         */
+
         // log into mysql db
         p.put("user", "root");
-        p.put("password", "");
+        p.put("password", PASSWORD);
 
         // connect to db
         c = DriverManager.getConnection(CONNECTION,p);
@@ -191,7 +196,7 @@ public class userAccessor {
     /**
      * Returns the password from the userID/email
      * @param userID (String): id of user
-     * @return passwword (string): user's password
+     * @return password (string): user's password
      * @throws SQLException throws sql
      */
     public String getPassword(String userID) throws SQLException {

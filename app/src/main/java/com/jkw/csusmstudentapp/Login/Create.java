@@ -1,15 +1,16 @@
 package com.jkw.csusmstudentapp.Login;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.jkw.csusmstudentapp.MainActivity;
 import com.jkw.csusmstudentapp.R;
 import com.jkw.csusmstudentapp.dbConnector.userAccessor;
 
@@ -42,14 +43,15 @@ public class Create extends AppCompatActivity {
                 if(username.isEmpty() || password.isEmpty()) {
                     Toast.makeText(Create.this,"Please enter user and password", Toast.LENGTH_SHORT).show();
                 }
+                else{
+                    hashedPassword = hashPassword(password);
+                    new Task().execute();
 
-                hashedPassword = hashPassword(password);
+                    Toast.makeText(Create.this,"User successfully made", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Create.this, MainActivity.class));
+                    finish();
+                }
 
-
-                new Task().execute();
-
-                Toast.makeText(Create.this,"User successfully made", Toast.LENGTH_SHORT).show();
-                finish();
             }
         });
 
@@ -71,7 +73,7 @@ public class Create extends AppCompatActivity {
                 int high = 1000;
                 int result = r.nextInt(high-low) + low;
 
-                ua.addUser(Integer.toString(result), "test", "test",
+                ua.addUser(Integer.toString(result), "first", "last",
                         username, hashedPassword, "student");
 
             } catch (SQLException e) {
