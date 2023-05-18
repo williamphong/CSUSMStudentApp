@@ -32,22 +32,17 @@ public class LoginManager {
         String userID = dbc.getUserID(email);
         return dbc.getUserType(userID);
     }
-
-    public static void main(String[] args) {
+    public void login(String email, String password) {
         try {
-            LoginManager loginManager = new LoginManager();
-            String email = "test@csusm.edu";
-            String password = "password2";
-
-            if (loginManager.validateUser(email, password)) {
-                String userType = loginManager.getUserType(email);
+            if (validateUser(email, password)) {
+                String userType = getUserType(email);
                 System.out.println("Login successful. User type: " + userType);
             } else {
                 System.out.println("Login failed.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Error logging in.");
         }
     }
-
 }
