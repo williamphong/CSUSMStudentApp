@@ -8,7 +8,7 @@ plugins {
 }
 
 dependencies{
-    api 'mysql:mysql-connector-java:8.0.33'
+    //api 'mysql:mysql-connector-java:8.0.33'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
 
