@@ -3,12 +3,13 @@ package com.jkw.csusmstudentapp.dbConnector;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Scanner;
 
 public class assignmentAccessor {
-    private static final String CONNECTION = "jdbc:mysql://localhost/";
+    private static final String CONNECTION = "jdbc:mysql://10.0.2.2/";
     private final Statement stmt;
 
     public assignmentAccessor() throws SQLException {
@@ -30,7 +31,7 @@ public class assignmentAccessor {
 
         // log into mysql db
         p.put("user", "root");
-        p.put("password", password);
+        p.put("password", "");
 
         // connect to db
         Connection c = DriverManager.getConnection(CONNECTION, p);
@@ -113,6 +114,20 @@ public class assignmentAccessor {
             }
         }
         return outputDesc;
+    }
+
+
+    public ArrayList<Integer> getAssignID() throws SQLException {
+        ArrayList<Integer> id = new ArrayList<>();
+        String sql = "SELECT description, assignID " +
+                "FROM SchoolAppDB.Assignments";
+
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()) {
+            //System.out.println(rs.getString("id"));
+            id.add(rs.getInt(2));
+        }
+        return id;
     }
 
 }

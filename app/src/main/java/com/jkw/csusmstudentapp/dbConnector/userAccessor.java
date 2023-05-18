@@ -8,7 +8,7 @@ import java.io.File;
 import java.util.Scanner;
 
 public class userAccessor {
-    private static final String CONNECTION = "jdbc:mysql://localhost/";
+    private static final String CONNECTION = "jdbc:mysql://10.0.2.2/";
     private final Connection c;
     private final Statement stmt;
 
@@ -35,7 +35,7 @@ public class userAccessor {
 
         // log into mysql db
         p.put("user", "root");
-        p.put("password", password);
+        p.put("password", "");
 
         // connect to db
         c = DriverManager.getConnection(CONNECTION,p);
