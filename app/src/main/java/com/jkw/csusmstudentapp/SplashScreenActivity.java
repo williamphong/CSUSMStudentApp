@@ -22,7 +22,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         new DatabaseTask().execute();
         new Handler().postDelayed(() -> {
-            //add user logged in check
+            //TODO: add a user logged in check
             if(false){
                 startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
             }
@@ -44,7 +44,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            String arr[];
+            String[] arr;
             try {
                 arr = pa.getArr();
                 ParkingPage.parkArr = arr;
