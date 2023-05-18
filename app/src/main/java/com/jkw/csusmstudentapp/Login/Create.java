@@ -1,5 +1,6 @@
 package com.jkw.csusmstudentapp.Login;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,8 +17,12 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Random;
 
 public class Create extends AppCompatActivity {
+    static String username;
+    static String hashedPassword;
+
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -38,28 +43,43 @@ public class Create extends AppCompatActivity {
                     Toast.makeText(Create.this,"Please enter user and password", Toast.LENGTH_SHORT).show();
                 }
 
-                String hashedPassword = hashPassword(password);
+                hashedPassword = hashPassword(password);
 
-                userAccessor ua = null;
-                try {
-                    ua = new userAccessor();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                try {
-                    ua.addUser(null, null, null, username, hashedPassword, "student");
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
 
+                new Task().execute();
 
                 Toast.makeText(Create.this,"User successfully made", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
 
+
     }
 
+    static class Task extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            userAccessor ua = null;
+            try {
+                ua = new userAccessor();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                Random r = new Random();
+                int low = 1;
+                int high = 1000;
+                int result = r.nextInt(high-low) + low;
+
+                ua.addUser(Integer.toString(result), "test", "test",
+                        username, hashedPassword, "student");
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return null;
+        }
+    }
     private String hashPassword(String password) {
         try {
             // Create message digest object for SHA-256 algorithm
