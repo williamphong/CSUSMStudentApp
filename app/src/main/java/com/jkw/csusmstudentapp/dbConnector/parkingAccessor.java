@@ -83,7 +83,7 @@ public class parkingAccessor {
         for(int i = 0; i < arr.length; i++)
         {
             String lotName = rs.getString("lot_name");
-            int availableSpots = rs.getInt("available_spots");
+            String availableSpots = rs.getString("available_spots");
             arr[i] = lotName + ": " + availableSpots;
             rs.next();
         }
