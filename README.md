@@ -1,3 +1,2 @@
 # CSUSMStudentApp
-Android application
-For SE370
+Android application - project for SE370
